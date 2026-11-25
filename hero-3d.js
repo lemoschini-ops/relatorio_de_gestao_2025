@@ -19,7 +19,7 @@ function rows(d) {
 
 function describe(d) {
   const list = rows(d).map(r => `${r.year}: ${r.point ? Number(r.point.exact ?? r.point.value).toLocaleString('pt-BR', { maximumFractionDigits: 10 }) : 'N/D'}`).join('; ');
-  desc.textContent = `${d.s.title} (${d.s.scope}, ${d.s.unit}) em barras 3D. Amarelo: ${d.year}, ano de referência; azul claro: ${d.baseline}, comparação. ${list}.`;
+  desc.innerHTML = `${esc(d.s.title)} (${esc(d.s.scope)}, ${esc(d.s.unit)}). Amarelo: ${esc(d.year)}; azul claro: ${esc(d.baseline)}. <span class="sr-only">Valores: ${esc(list)}.</span>`;
 }
 
 function fallback(d) {
@@ -57,7 +57,7 @@ function labelSprite(THREE, text, color, size) {
   c.width = w; c.height = h; ctx.font = font; ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, w / 2, h / 2);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
-  const scale = 0.0105 * size; sprite.scale.set(w / h * scale * 1.25, scale * 1.25, 1);
+  const scale = 0.026 * size; sprite.scale.set(w / h * scale * 1.25, scale * 1.25, 1);
   return sprite;
 }
 
@@ -93,12 +93,12 @@ function createScene(THREE) {
       if (r.point) {
         const mesh = new THREE.Mesh(new THREE.BoxGeometry(gap * 0.56, 1, gap * 0.56), new THREE.MeshStandardMaterial({ color: new THREE.Color(color || '#5992ed'), roughness: 0.45, metalness: 0.1 }));
         mesh.userData.target = target; mesh.scale.y = motionOK() ? 0.001 : target; mesh.position.y = mesh.scale.y / 2; holder.add(mesh);
-        const value = labelSprite(THREE, compact(r.point.value), ink, 9); value.position.y = target + 0.28; value.userData.follow = mesh; holder.add(value);
+        const value = labelSprite(THREE, compact(r.point.value), ink, 9); value.position.y = target + 0.3; value.userData.follow = mesh; holder.add(value);
       } else {
         const ghost = new THREE.Mesh(new THREE.BoxGeometry(gap * 0.56, 0.02, gap * 0.56), new THREE.MeshBasicMaterial({ color: 0xc5d4eb, wireframe: true }));
         holder.add(ghost); const nd = labelSprite(THREE, 'N/D', ink, 9); nd.position.y = 0.3; holder.add(nd);
       }
-      const yl = labelSprite(THREE, r.year, ink, 10); yl.position.set(0, -0.32, 1.05); holder.add(yl);
+      const yl = labelSprite(THREE, r.year, ink, 10); yl.position.set(0, -0.38, 1.05); holder.add(yl);
       group.add(holder); bars.push(holder);
     });
     growStart = performance.now(); request();
@@ -109,7 +109,7 @@ function createScene(THREE) {
     let growing = false;
     for (const h of bars) h.children.forEach(m => {
       if (m.userData.target !== undefined) { const s = motionOK() ? Math.max(0.001, m.userData.target * ease) : m.userData.target; m.scale.y = s; m.position.y = s / 2; if (s < m.userData.target) growing = true; }
-      if (m.userData.follow) m.position.y = m.userData.follow.scale.y + 0.28;
+      if (m.userData.follow) m.position.y = m.userData.follow.scale.y + 0.3;
     });
     const auto = motionOK() && !paused ? Math.sin(now / 4200) * 0.32 : 0;
     group.rotation.y = auto + userAngle;
