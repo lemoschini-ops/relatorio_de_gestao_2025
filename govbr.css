@@ -1,0 +1,125 @@
+/* Camada Design System gov.br (fundamentos visuais 3.x) aplicada sobre style.css.
+   Tokens: azul de ação #1351b4 (blue-warm-vivid-70), azul institucional #071d41 (blue-warm-vivid-90),
+   destaque #ffcd07 (yellow-vivid-20), sucesso #168821, tipografia Rawline/Raleway.
+   Todas as visualizações usam os tokens --chart-*; não use cores fixas nos gráficos. */
+:root{
+ --gov-blue:#1351b4;--gov-blue-80:#0c326f;--gov-blue-90:#071d41;--gov-blue-50:#2670e8;--gov-blue-40:#5992ed;--gov-blue-20:#c5d4eb;--gov-blue-10:#dbe8fb;
+ --gov-yellow:#ffcd07;--gov-green:#168821;--gov-orange:#c05600;--gov-violet:#8168b3;--gov-red:#e52207;
+ --gov-font:Rawline,Raleway,sans-serif;--focus-color:#c2850c;
+ --navy:var(--gov-blue-90);--blue:var(--gov-blue);--blue-2:var(--gov-blue-50);--yellow:var(--gov-yellow);--teal:var(--gov-green);--coral:var(--gov-orange);--purple:var(--gov-violet);
+ --bg:#f8f8f8;--surface:#fff;--surface-2:#f3f6fb;--text:#333;--heading:#071d41;--muted:#555;--border:#dcdcdc;--nav-bg:#ededed;--nav-text:#333;
+ --accent:var(--gov-blue);--accent-soft:var(--gov-blue-10);--on-navy:#fff;--on-yellow:#333;--danger:#b51a00;--danger-bg:#fde0db;
+ --shadow:0 1px 6px rgba(51,51,51,.16);--radius:8px;--hero-a:#04122a;--chart-secondary:var(--chart-base);
+ /* Paleta única dos gráficos: amarelo = ano de referência; azul claro = ano de comparação; azul = demais anos. */
+ --chart-main:var(--gov-blue);--chart-ref:var(--gov-yellow);--chart-ref-edge:#7a5c00;--chart-base:var(--gov-blue-40);
+ --chart-cat-1:var(--gov-blue-90);--chart-cat-2:var(--gov-blue-50);--chart-cat-3:var(--gov-yellow);--chart-cat-4:var(--gov-green);--chart-cat-5:var(--gov-orange);--chart-cat-6:var(--gov-violet);
+ --chart-grid:#e6e6e6;--chart-label:#555;--chart-seq:var(--gov-blue);--heatmap-ink:#071d41;
+ /* Elemento 3D (sempre sobre o fundo escuro do destaque) */
+ --hero3d-main:#5992ed;--hero3d-ref:#ffcd07;--hero3d-base:#c5d4eb;--hero3d-ink:#fff
+}
+:root[data-theme=dark]{
+ --bg:#06152f;--surface:#0b2550;--surface-2:#0f2f63;--text:#e6e6e6;--heading:#fff;--muted:#c5d4eb;--border:#2a4f8c;--nav-bg:#081c3e;--nav-text:#e6e6e6;
+ --accent:var(--gov-blue-20);--accent-soft:#163b78;--navy:var(--gov-blue-80);--blue-2:var(--gov-blue-40);--danger:#ffb2a9;--danger-bg:#3a1d26;--shadow:none;--focus-color:var(--gov-yellow);
+ --chart-main:var(--gov-blue-40);--chart-base:var(--gov-blue-20);--chart-ref-edge:#fff2b3;
+ --chart-cat-1:var(--gov-blue-20);--chart-cat-2:var(--gov-blue-40);--chart-cat-4:#5fc46a;--chart-cat-5:#ff9c5b;--chart-cat-6:#b9a6e6;
+ --chart-grid:#24467f;--chart-label:#c5d4eb;--chart-seq:var(--gov-blue-40);--heatmap-ink:#fff
+}
+html{font-size:100%}
+body,button,input,select,textarea,.subject-tab{font-family:var(--gov-font)}
+body{background:var(--bg);color:var(--text);line-height:1.5}
+h1,h2,h3,.section-title{font-family:var(--gov-font);color:var(--heading)}
+h1{font-weight:700}h2,h3{font-weight:600}
+strong,b,.kpi-card strong{font-weight:700}
+a{color:var(--accent);text-underline-offset:3px}
+a:hover{text-decoration:underline}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:4px dashed var(--focus-color);outline-offset:4px}
+.chart-year:focus-visible rect{stroke:var(--focus-color)}
+.skip-link:focus{border:4px dashed var(--focus-color);color:var(--accent);font-weight:600;z-index:1000}
+
+/* Controles (padrão de botões e campos gov.br) */
+.secondary{border:1px solid var(--accent);color:var(--accent);background:var(--surface);border-radius:100em;padding:8px 18px;font-weight:600;min-height:40px}
+.secondary:hover:not(:disabled){background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.primary{background:var(--gov-blue);border-color:var(--gov-blue);border-radius:100em;font-weight:600}
+.primary:hover{background:var(--gov-blue-80)}
+select,input[type=search],input[type=text]{border:1px solid #888;border-radius:6px;background:var(--surface);color:var(--text);min-height:40px;padding:8px 12px}
+:root[data-theme=dark] select,:root[data-theme=dark] input[type=search]{border-color:var(--gov-blue-20)}
+.dash-controls label,.entity-filters label{font-weight:600;color:var(--text)}
+.chip{border-radius:100em;font-weight:600}
+
+/* Navegação por assunto */
+.subject-nav{border-radius:var(--radius)}
+.subject-tab{font-weight:600}
+.subject-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.subject-tab:hover{background:var(--accent-soft)}
+
+/* Cartões, painéis e títulos */
+.section-title{border-left-color:var(--gov-blue);font-weight:700}
+.kpi-card{border-top-color:var(--chart-cat-1)}
+.kpi-card.tone-1{border-top-color:var(--chart-cat-2)}
+.kpi-card.tone-2{border-top-color:var(--chart-cat-4)}
+.kpi-card.tone-3{border-top-color:var(--chart-cat-5)}
+.derived-card{border-left-color:var(--gov-blue)}
+.qualification-note{border-left-color:var(--gov-blue);border-radius:0 var(--radius) var(--radius) 0}
+.figure-top>span{color:var(--muted);letter-spacing:.04em}
+.area-table th,.provenance-table th,.result-table th{background:var(--navy);color:var(--on-navy)}
+
+/* Gráficos: estilo único */
+.chart-grid{stroke:var(--chart-grid)}
+.chart-label{fill:var(--chart-label);font-family:var(--gov-font)}
+.donut-total{fill:var(--heading);font-family:var(--gov-font)}
+.history-line,.spark-line{stroke:var(--chart-main)}
+.bar-main{fill:var(--chart-main);background:var(--chart-main)!important}
+.bar-focus{fill:var(--chart-ref);background:var(--chart-ref)!important;box-shadow:inset 0 0 0 1px var(--chart-ref-edge)}
+.bar-baseline{fill:var(--chart-base);background:var(--chart-base)!important}
+.main-key{background:var(--chart-main)}
+.focus-key{background:var(--chart-ref);box-shadow:inset 0 0 0 1px var(--chart-ref-edge)}
+.baseline-key{background:var(--chart-base)}
+.heatmap-tile{background:color-mix(in srgb,var(--chart-seq) var(--strength),var(--surface));color:var(--heatmap-ink)}
+.heatmap-tile:hover{box-shadow:inset 0 0 0 2px var(--focus-color)}
+.heatmap-tile.year-focus,.heatmap-axis.year-focus{box-shadow:inset 0 -3px var(--chart-ref)}
+.heatmap-legend i{background:linear-gradient(90deg,color-mix(in srgb,var(--chart-seq) 8%,var(--surface)),color-mix(in srgb,var(--chart-seq) 70%,var(--surface)))}
+
+/* Cabeçalho institucional */
+.govbr-header{background:var(--surface);box-shadow:var(--shadow);border-bottom:1px solid var(--border)}
+.govbr-header-inner,.govbr-footer-inner{max-width:1320px;margin:0 auto;padding:12px clamp(1rem,3vw,2rem);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.govbr-brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--heading)}
+.govbr-brand:hover{text-decoration:none}
+.govbr-brand svg{width:40px;height:40px;flex-shrink:0}
+.govbr-brand-sep{width:1px;align-self:stretch;background:var(--border)}
+.govbr-brand-text strong{display:block;font-size:1.125rem;font-weight:700;line-height:1.2}
+.govbr-brand-text span{display:block;font-size:.875rem;color:var(--muted)}
+.govbr-header-links{display:flex;gap:8px;flex-wrap:wrap;font-size:.875rem}
+.govbr-header-links a{font-weight:600;padding:8px 10px}
+
+/* Destaque com o elemento 3D */
+.page-heading{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:center;border-radius:var(--radius);background:linear-gradient(115deg,var(--hero-a),var(--gov-blue-90) 55%,var(--gov-blue-80));padding:24px 28px}
+.page-heading .eyebrow{background:var(--gov-yellow);color:#333;border-radius:100em;font-weight:700}
+.page-heading h1{margin:0}
+.page-heading p:not(.eyebrow){color:#dbe8fb;font-size:1rem}
+.hero-3d{margin:0;min-width:0}
+.hero-3d-stage{position:relative;height:230px;border-radius:var(--radius);background:radial-gradient(ellipse at 50% 70%,#1351b433,transparent 70%);overflow:hidden;cursor:grab;touch-action:pan-y}
+.hero-3d-stage canvas{display:block;width:100%!important;height:100%!important}
+.hero-3d-stage.is-static{cursor:default}
+.hero-3d-fallback{display:flex;align-items:flex-end;gap:10px;height:100%;padding:16px 8px 8px;margin:0;list-style:none}
+.hero-3d-fallback li{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;font-size:.75rem;color:#fff}
+.hero-3d-fallback i{display:block;width:100%;max-width:44px;border-radius:4px 4px 0 0;background:var(--hero3d-main)}
+.hero-3d-fallback li.ref i{background:var(--hero3d-ref)}
+.hero-3d-fallback li.base i{background:var(--hero3d-base)}
+.hero-3d figcaption{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:8px;font-size:.8125rem;color:#dbe8fb;line-height:1.4}
+.hero-3d-toggle{flex-shrink:0;background:transparent;color:#fff;border:1px solid #c5d4eb;border-radius:100em;padding:4px 12px;font-size:.8125rem;font-weight:600;min-height:32px}
+.hero-3d-toggle:hover{background:#ffffff1f}
+.hero-3d-toggle:focus-visible{outline-color:var(--gov-yellow)}
+
+/* Rodapé institucional */
+.govbr-footer{background:var(--gov-blue-90);color:#fff;margin-top:32px}
+:root[data-theme=dark] .govbr-footer{background:#04122a;border-top:1px solid var(--border)}
+.govbr-footer-inner{padding-top:28px;padding-bottom:28px;align-items:flex-start}
+.govbr-footer h2{color:#fff;font-size:1rem;font-weight:700;margin:0 0 12px}
+.govbr-footer ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 24px}
+.govbr-footer a{color:#fff;font-weight:600}
+.govbr-footer a:focus-visible{outline-color:var(--gov-yellow)}
+.govbr-footer p{margin:0;font-size:.875rem;color:#c5d4eb;max-width:60ch}
+
+@media(max-width:850px){.page-heading{grid-template-columns:1fr;padding:20px}.hero-3d-stage{height:200px}}
+@media(max-width:576px){.govbr-brand-sep,.govbr-header-links{display:none}.govbr-brand-text strong{font-size:1rem}}
+@media print{.govbr-header-links,.hero-3d,.govbr-footer{display:none!important}.page-heading{display:block;background:none;color:#000;padding:0}.page-heading h1,.page-heading p:not(.eyebrow){color:#000}}
